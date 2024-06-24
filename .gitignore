@@ -8,6 +8,7 @@ media
 
 # migrations
 migrations/
+profiles/
 
 # Backup files # 
 *.bak 

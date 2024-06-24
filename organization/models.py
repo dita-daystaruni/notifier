@@ -39,3 +39,6 @@ class Organization(models.Model):
     date_added = models.DateTimeField(
         auto_created=True,
     )
+
+    def __str__(self) -> str:
+        return self.name
