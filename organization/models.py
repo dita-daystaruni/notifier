@@ -30,6 +30,12 @@ class Organization(models.Model):
         null=False,
     )
 
+    # Description
+    description = models.TextField(
+        blank=False,
+        null=False,
+    )
+
     # organization profile picture
     profile = models.ImageField(
         upload_to="profiles/",
