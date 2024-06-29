@@ -10,6 +10,7 @@ media
 migrations/
 profiles/
 stories-media/
+events-media/
 
 # Backup files # 
 *.bak 

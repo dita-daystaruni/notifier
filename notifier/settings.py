@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     # Custom application
     "stories",
     "organization",
+    "events",
 ]
 
 MIDDLEWARE = [
