@@ -9,6 +9,7 @@ media
 # migrations
 migrations/
 profiles/
+stories-media/
 
 # Backup files # 
 *.bak 

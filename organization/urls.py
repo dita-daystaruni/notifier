@@ -1,7 +1,11 @@
 from django.urls import path
 
-from .views import OrganizationPing
+from .views import (
+    RetrieveAllOrganizations,
+    RetriveOrganizationDueStories,
+)
 
 urlpatterns = [
-    path("ping", OrganizationPing.as_view()),
+    path("all", RetrieveAllOrganizations.as_view()),
+    path("due", RetriveOrganizationDueStories.as_view()),
 ]

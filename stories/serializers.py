@@ -1,11 +1,11 @@
 from rest_framework import serializers
 
-from organization.serializers import OrganizationSerializer
+# from organization.serializers import OrganizationSerializer
 from .models import Story
 
 
 class StorySerializer(serializers.ModelSerializer):
-    organization = OrganizationSerializer()
+    # organization = OrganizationSerializer()
 
     class Meta:
         model = Story
