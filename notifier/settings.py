@@ -136,3 +136,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "")
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# Session cookie for expiry
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_AGE = 600  # 600 seconds = 10 minutes
