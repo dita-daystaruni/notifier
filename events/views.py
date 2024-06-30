@@ -1,3 +1,4 @@
+from django.db import OperationalError
 from django.utils import timezone
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 
@@ -22,7 +23,12 @@ class RetrieveEventByID(RetrieveAPIView):
     """Retrieve an event specified by ID"""
 
     serializer_class = EventSerializer
-    queryset = Event.objects.first()
+
+    try:
+        queryset = Event.objects.first()
+    except OperationalError as oe:
+        pass
+
     lookup_url_kwarg = "id"
 
 
