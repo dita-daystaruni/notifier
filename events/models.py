@@ -1,5 +1,6 @@
 from django.db import models
 import uuid
+import mimetypes
 
 
 class Event(models.Model):
@@ -48,9 +49,15 @@ class Event(models.Model):
         null=True,
     )
 
-    # event poster
-    poster = models.ImageField(
+    # event poster or video
+    media = models.FileField(
         upload_to="events-media/",
+    )
+
+    media_type = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True,
     )
 
     url = models.URLField(
@@ -76,6 +83,11 @@ class Event(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+    def save(self, *args, **kwargs):
+        self.media_type = mimetypes.guess_type(self.media.path)[0]
+        self.likes = 0
+        super().save(*args, **kwargs)
 
 
 class EventLike(models.Model):

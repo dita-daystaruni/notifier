@@ -1,9 +1,16 @@
 from django.db import OperationalError
 from django.utils import timezone
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+from django.views.generic.edit import CreateView
+from rest_framework.generics import (
+    CreateAPIView,
+    ListAPIView,
+    ListCreateAPIView,
+    RetrieveAPIView,
+)
+from rest_framework.mixins import Response
 
-from events.models import Event
-from events.serializers import EventSerializer
+from events.models import Event, EventLike
+from events.serializers import EventLikeSerializer, EventSerializer
 
 
 # Create your views here.
@@ -38,3 +45,19 @@ class RetrieveEventByName(RetrieveAPIView):
     serializer_class = EventSerializer
     queryset = Event.objects.all()
     lookup_field = "name"
+
+
+class LikeEventView(CreateAPIView):
+    """Like an event"""
+
+    serializer_class = EventLikeSerializer
+    queryset = EventLike.objects.all()
+
+
+class LikedEventsViewApi(ListAPIView):
+    serializer_class = EventSerializer
+    lookup_url_kwarg = "user_id"
+
+    def get_queryset(self):
+        user_id = self.kwargs["user_id"]  # Get userid from URL params
+        return Event.objects.filter(event_likes__user=user_id).order_by("-likes")

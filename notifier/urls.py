@@ -20,6 +20,11 @@ from django.urls import include, path
 from .settings import MEDIA_URL, MEDIA_ROOT, DEBUG
 from django.conf.urls.static import static
 
+
+admin.site.site_header = "Academia Notifier"
+admin.site.site_title = "Notifier"
+admin.site.index_title = "Manage notifications and events"
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("organizations/", include("organization.urls")),
