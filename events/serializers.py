@@ -19,6 +19,9 @@ class EventLikeSerializer(serializers.ModelSerializer):
     class Meta:
         model = EventLike
         fields = "__all__"
+        read_only_fields = [
+            "date_added",
+        ]
 
     def create(self, validated_data):
         event = validated_data["event"]

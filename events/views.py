@@ -58,3 +58,15 @@ class LikedEventsViewApi(ListAPIView):
     def get_queryset(self):
         user_id = self.kwargs["user_id"]  # Get userid from URL params
         return Event.objects.filter(event_likes__user=user_id).order_by("-likes")
+
+
+class LikedEventView(RetrieveAPIView):
+
+    serializer_class = EventLikeSerializer
+    queryset = EventLike.objects.all()
+    lookup_url_kwarg = "event"
+
+    def get_object(self):
+        event = self.kwargs.get(self.lookup_url_kwarg)
+        user = self.kwargs.get("user")
+        return EventLike.objects.get(event=event, user=user)

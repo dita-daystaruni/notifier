@@ -6,6 +6,7 @@ from .views import (
     ListDueEvents,
     RetrieveEventByID,
     RetrieveEventByName,
+    LikedEventView,
 )
 
 urlpatterns = [
@@ -15,4 +16,5 @@ urlpatterns = [
     path("search/<str:name>", RetrieveEventByName.as_view()),
     path("like", LikeEventView.as_view()),
     path("liked-by/<uuid:user_id>", LikedEventsViewApi.as_view()),
+    path("is-liked-by/<uuid:event>/<uuid:user>", LikedEventView.as_view()),
 ]
