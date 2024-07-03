@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "stories",
     "organization",
     "events",
+    "semester",
 ]
 
 MIDDLEWARE = [
@@ -138,8 +139,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "")
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'public', 'static')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'public', 'media')
+STATIC_ROOT = os.path.join(BASE_DIR, "public", "static")
+MEDIA_ROOT = os.path.join(BASE_DIR, "public", "media")
 
 # Session cookie for expiry
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
