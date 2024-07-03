@@ -86,7 +86,6 @@ class Event(models.Model):
 
     def save(self, *args, **kwargs):
         self.media_type = mimetypes.guess_type(self.media.path)[0]
-        self.likes = 0
         super().save(*args, **kwargs)
 
 
