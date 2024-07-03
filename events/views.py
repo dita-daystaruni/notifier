@@ -8,6 +8,7 @@ from rest_framework.generics import (
     RetrieveAPIView,
 )
 from rest_framework.mixins import Response
+from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED
 
 from events.models import Event, EventLike
 from events.serializers import EventLikeSerializer, EventSerializer
@@ -18,7 +19,7 @@ class ListDueEvents(ListAPIView):
     serializer_class = EventSerializer
     queryset = Event.objects.filter(
         start_date__lt=timezone.now(), end_date__gt=timezone.now()
-    ).order_by("-likes")
+    ).order_by("-likes", "-date_added")
 
 
 class ListAllEvents(ListAPIView):
@@ -52,6 +53,47 @@ class LikeEventView(CreateAPIView):
 
     serializer_class = EventLikeSerializer
     queryset = EventLike.objects.all()
+
+    def post(self, request, *args, **kwargs):
+        """I dont know wtf im doing"""
+        event = request.data.get("event")
+        user = request.data.get("user")
+
+        prisca = Event.objects.get(id=event)
+        print(prisca.id, prisca.description, prisca.name, prisca.likes)
+        print(prisca)
+
+        # Check if the user already liked this event
+        existing_like = EventLike.objects.filter(event=event, user=user).first()
+        likes = prisca.likes
+        print(f"First like {prisca.likes}")
+
+        if existing_like:
+
+            # If like already exists, delete it
+            existing_like.delete()
+            # Decrease likes count of the event
+            likes -= 1
+            prisca.likes = likes
+
+            print(f"Inside existing {prisca.likes}")
+            prisca.save()
+        else:
+            # If like doesn't exist, create a new one
+            ok = EventLikeSerializer(data=request.data)
+            if ok.is_valid():
+                # Increase likes count of the event
+                likes += 1
+                prisca.likes = likes
+
+                print(f"Inside new {prisca.likes}")
+                prisca.save()
+                print(f"Saved! {prisca.likes}")
+                ok.save()
+                return Response(ok.data, status=HTTP_201_CREATED)
+
+        # Return existing_like if it was deleted
+        return Response(EventLikeSerializer(existing_like).data, status=HTTP_200_OK)
 
 
 class LikedEventsViewApi(ListAPIView):
